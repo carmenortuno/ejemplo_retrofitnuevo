@@ -3,10 +3,14 @@ package com.example.ejemplo_login.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ejemplo_login.ApiFragmentDirections
 import com.example.ejemplo_login.R
 import com.example.ejemplo_login.models.Post
 
@@ -26,10 +30,14 @@ class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallba
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textTitle: TextView = itemView.findViewById(R.id.textTitle)
         private val textBody: TextView = itemView.findViewById(R.id.textBody)
-
+        private val buttonEdit: ImageButton = itemView.findViewById(R.id.buttonEdit)
         fun bind(post: Post) {
             textTitle.text = post.title
             textBody.text = post.body
+            buttonEdit.setOnClickListener {
+               val action = ApiFragmentDirections.actionApiFragmentToApiInsertFragment(post.id!!)
+                it.findNavController().navigate(action)
+            }
         }
     }
 }

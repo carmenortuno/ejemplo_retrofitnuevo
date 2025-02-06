@@ -21,4 +21,14 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textColor="@android:color/darker_gray"/>
+
+    <ImageButton
+        android:id="@+id/buttonEdit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/editar_foreground"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Editar post"
+        android:layout_gravity="end"
+        android:padding="8dp"/>
 </LinearLayout>
