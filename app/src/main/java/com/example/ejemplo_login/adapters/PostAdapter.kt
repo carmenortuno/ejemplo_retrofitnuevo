@@ -10,30 +10,36 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ejemplo_login.R
 import com.example.ejemplo_login.models.Post
 
-class PostAdapter: ListAdapter<Post, PostAdapter.PostViewHolder> (DiffCallback()) {
-
-    class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val title: TextView = view.findViewById(R.id.textTitle)
-        private val body: TextView = view.findViewById(R.id.textBody)
-
-        fun bind(post: Post) {
-            title.text = post.title
-            body.text = post.body
-        }
-    }
+class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_post, parent, false)
         return PostViewHolder(view)
     }
+
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val post = getItem(position)
+        holder.bind(post)
     }
 
-    // DiffUtil.ItemCallback<Post>: Mejora el rendimiento comparando solo elementos modificados.
-    class DiffCallback : DiffUtil.ItemCallback<Post>() {
-        override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean = oldItem == newItem
+    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textTitle: TextView = itemView.findViewById(R.id.textTitle)
+        private val textBody: TextView = itemView.findViewById(R.id.textBody)
+
+        fun bind(post: Post) {
+            textTitle.text = post.title
+            textBody.text = post.body
+        }
+    }
+}
+
+class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
+    override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+        return oldItem.id == newItem.id
     }
 
+    override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+        return oldItem == newItem
+    }
 }
